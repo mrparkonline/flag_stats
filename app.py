@@ -20,6 +20,9 @@ st.set_page_config(
 # PASSING DATA
 passing_cols = ['Player', 'Passing_TD', 'Passing_OnePointConversion', 'Passing_TwoPointConversion']
 pass_df = stat_df.filter(items=passing_cols).groupby('Player').sum(numeric_only=True)
+
+pass_df = pass_df[(pass_df.T != 0).any()]
+
 pass_df = pass_df.sort_values(by='Passing_TD', ascending=False)
 pass_df.columns = ['TD', '1 Point Conversions', '2 Point Conversions']
 
@@ -28,6 +31,9 @@ pass_df.columns = ['TD', '1 Point Conversions', '2 Point Conversions']
 # RECEIVING DATA
 rec_cols = ['Player', 'Receiving_Catches', 'Receiving_TD', 'Receiving_OnePointConversion', 'Receiving_TwoPointConversion']
 rec_df = stat_df.filter(items=rec_cols).groupby('Player').sum(numeric_only=True)
+
+rec_df = rec_df[(rec_df.T != 0).any()]
+
 rec_df = rec_df.sort_values(by='Receiving_Catches', ascending=False)
 rec_df.columns = ['Receptions', 'TD', '1 Point Conversions', '2 Point Conversions']
 
@@ -36,6 +42,9 @@ rec_df.columns = ['Receptions', 'TD', '1 Point Conversions', '2 Point Conversion
 # RUSHING DATA
 run_cols = ['Player', 'Run_TD', 'Run_OnePointConversion', 'Run_TwoPointConversion']
 run_df = stat_df.filter(items=run_cols).groupby('Player').sum(numeric_only=True)
+
+run_df = run_df[(run_df.T != 0).any()]
+
 run_df = run_df.sort_values(by='Run_TD', ascending=False)
 run_df.columns = ['TD', '1 Point Conversions', '2 Point Conversions']
 
@@ -44,6 +53,9 @@ run_df.columns = ['TD', '1 Point Conversions', '2 Point Conversions']
 # DEFENSIVE DATA
 def_cols = ['Player', 'Def_Flag', 'Def_INT', 'Def_TD']
 def_df = stat_df.filter(items=def_cols).groupby('Player').sum(numeric_only=True)
+
+def_df = def_df[(def_df.T != 0).any()]
+
 def_df = def_df.sort_values(by='Def_Flag', ascending=False)
 def_df.columns = ['Flags', 'Interceptions', 'TD']
 
@@ -52,23 +64,26 @@ def_df.columns = ['Flags', 'Interceptions', 'TD']
 # Kick Return
 kr_cols = ['Player', 'KR_TD']
 kr_df = stat_df.filter(items=kr_cols).groupby('Player').sum(numeric_only=True)
+
+kr_df = kr_df[(kr_df.T != 0).any()]
+
 kr_df = kr_df.sort_values(by='KR_TD', ascending=False)
 kr_df.columns = ['TD']
 
 # Streamlit App
-st.title("GWW Jr Girls Flag Football 2025")
+st.header("GWW Jr Girls Flag Football 2025")
 
-st.write("Passing Stats")
+st.markdown("**Passing Stats**")
 st.write(pass_df)
 
-st.write("Rushing Stats")
+st.markdown("**Rushing Stats**")
 st.write(run_df)
 
-st.write("Receiving Stats")
+st.markdown("**Receiving Stats**")
 st.write(rec_df)
 
-st.write("Defensive Stats")
+st.markdown("**Defensive Stats**")
 st.write(def_df)
 
-st.write("Kick Return")
+st.markdown("**Kick Return**")
 st.write(kr_df)
