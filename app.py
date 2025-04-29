@@ -79,11 +79,6 @@ kr_df.columns = ['TD']
 st.header("GWW Flag Football Stats")
 st.markdown("*Junior Girl's 2025 Season*")
 
-
-
-with st.expander("Game Results"):
-    st.write(game_df)
-
 st.markdown("**Passing Stats**")
 st.write(pass_df)
 
@@ -98,3 +93,6 @@ st.write(def_df)
 
 st.markdown("**Kick Return**")
 st.write(kr_df)
+
+with st.expander("Game Results"):
+    st.write(game_df)
