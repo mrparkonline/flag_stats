@@ -6,7 +6,7 @@ import pandas as pd
 # Access the secrets
 google_service_account_info = st.secrets["google_service_account"]
 gc = gspread.service_account_from_dict(google_service_account_info)
-stat_sheet = gc.open_by_key('1RLdB3ZTcwNRZp0pv-R6piPWJeHmsZA3NJRkZ73nbzxw')
+stat_sheet = gc.open_by_key(st.secrets['sheet_link']['key'])
 responses = stat_sheet.get_worksheet(0)
 all_stats = responses.get_all_records()
 stat_df = pd.DataFrame(all_stats).replace('', 0)
