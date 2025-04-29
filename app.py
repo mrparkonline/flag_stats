@@ -6,9 +6,14 @@ import pandas as pd
 google_service_account_info = st.secrets["google_service_account"]
 gc = gspread.service_account_from_dict(google_service_account_info)
 stat_sheet = gc.open_by_key(st.secrets['sheet_link']['key'])
+
 responses = stat_sheet.get_worksheet(0)
 all_stats = responses.get_all_records()
 stat_df = pd.DataFrame(all_stats).replace('', 0)
+
+game_sheet = stat_sheet.get_worksheet(1)
+game_df = pd.DataFrame(game_sheet.get_all_records())
+game_df.columns = ['Game Date', 'GWW Score', 'Opponent Score', 'Opposing Team', 'Game Result', 'Type of Game']
 
 st.set_page_config(
     page_title="JR Flag Stats",
@@ -71,7 +76,13 @@ kr_df = kr_df.sort_values(by='KR_TD', ascending=False)
 kr_df.columns = ['TD']
 
 # Streamlit App
-st.header("GWW Jr Girls Flag Football 2025")
+st.header("GWW Flag Football Stats")
+st.markdown("*Junior Girl's 2025 Season*")
+
+
+
+with st.expander("Game Results"):
+    st.write(game_df)
 
 st.markdown("**Passing Stats**")
 st.write(pass_df)
