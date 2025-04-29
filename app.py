@@ -3,13 +3,18 @@ import gspread
 import pandas as pd
 
 # Initialization
-# Access the secrets
 google_service_account_info = st.secrets["google_service_account"]
 gc = gspread.service_account_from_dict(google_service_account_info)
 stat_sheet = gc.open_by_key(st.secrets['sheet_link']['key'])
 responses = stat_sheet.get_worksheet(0)
 all_stats = responses.get_all_records()
 stat_df = pd.DataFrame(all_stats).replace('', 0)
+
+st.set_page_config(
+    page_title="JR Flag Stats",
+    page_icon=":football:",
+    layout="wide"
+)
 # End of Initialzations
 
 # PASSING DATA
